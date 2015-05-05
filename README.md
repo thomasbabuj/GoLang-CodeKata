@@ -1,0 +1,2 @@
+# GoLang-CodeKata
+Experimenting GoLang
