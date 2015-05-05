@@ -6,9 +6,12 @@
 *  Find the sum of all the multiples of 3 or 5 below 1000.
 *
 *  Reference links : https://coderwall.com/p/cp5fya/measuring-execution-time-in-go
+*
+*  To get a more efficient solution you could also calculate the sum of the numbers less
+*  than 1000 that are divisible by 3, plus the sum of the numbers less than 1000 that are divisible
+*  by 5. But as you have summed numbers divisible by 15 twice you would have to subtract the
+*  sum of the numbers divisible by 15.
  */
-
-
 
 package main
 
@@ -18,32 +21,22 @@ import (
     "time"
 )
 
+const target uint64 = 1000
+
 func timeTrack(start time.Time, name string) {
     elapsed := time.Since(start)
     log.Printf("%s took %s", name ,elapsed)
 }
 
-func sumMulitples(number int ) (answer string ) {
-
-   sumOfMultiples := 0
-
-   defer timeTrack(time.Now(), "Sum of all the multiples")
-
-   for i:=1; i <= number; i++ {
-      if  i % 3 == 0 || i % 5 == 0 && i != number {
-        sumOfMultiples += i
-      }
-   }
-
-   return fmt.Sprintf("Sum of all the multiples of 3 or 5 below %d : %d \n", number, sumOfMultiples)
-
+func sumDivibleBy(number uint64) (sum uint64) {
+    defer timeTrack(time.Now(), "Sum of all the multiples")
+    p := target / number
+    sum = number * (p * (p + 1)) / 2
+    return
 }
 
 func main() {
-   numberRange := 1000000000
+    output := sumDivibleBy(3) + sumDivibleBy(5) - sumDivibleBy(15)
 
-   output := sumMulitples (numberRange)
-
-   fmt.Printf("%s \n", output)
-
+    fmt.Printf("Sum of all the multiples of 3 or 5 below %d : %d \n ", target, output )
 }
