@@ -4,24 +4,46 @@
 *  multiples is 23.
 *
 *  Find the sum of all the multiples of 3 or 5 below 1000.
+*
+*  Reference links : https://coderwall.com/p/cp5fya/measuring-execution-time-in-go
  */
+
+
 
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "log"
+    "time"
+)
 
-func main() {
+func timeTrack(start time.Time, name string) {
+    elapsed := time.Since(start)
+    log.Printf("%s took %s", name ,elapsed)
+}
 
-   numberRange := 1000
+func sumMulitples(number int ) (answer string ) {
 
    sumOfMultiples := 0
 
-   for i:=1; i <= numberRange; i++ {
-      if  i % 3 == 0 || i % 5 == 0 && i != numberRange {
+   defer timeTrack(time.Now(), "Sum of all the multiples")
+
+   for i:=1; i <= number; i++ {
+      if  i % 3 == 0 || i % 5 == 0 && i != number {
         sumOfMultiples += i
       }
    }
 
-   fmt.Printf("Sum of all the multiples of 3 or 5 below %d : %d \n", numberRange, sumOfMultiples)
+   return fmt.Sprintf("Sum of all the multiples of 3 or 5 below %d : %d \n", number, sumOfMultiples)
+
+}
+
+func main() {
+   numberRange := 1000000000
+
+   output := sumMulitples (numberRange)
+
+   fmt.Printf("%s \n", output)
 
 }
